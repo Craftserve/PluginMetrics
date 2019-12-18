@@ -185,7 +185,7 @@ public class Metrics {
         try {
             serverId = SERVER_ID_RESOLVER.getId();
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Could not resolve server ID for plugin metrics..", e);
+            LOGGER.log(Level.SEVERE, "Could not resolve server ID for plugin metrics.", e);
             serverId = UUID.randomUUID();
         }
 
