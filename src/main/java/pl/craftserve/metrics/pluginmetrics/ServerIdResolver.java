@@ -48,11 +48,12 @@ public class ServerIdResolver {
 
     protected UUID resolveServerId() throws IOException {
         Properties properties = new Properties();
+        String key = MetricsProperties.Keys.SERVER_ID.key();
 
         if (this.file.exists()) {
             this.read(properties);
 
-            String serverIdString = properties.getProperty("server_id");
+            String serverIdString = properties.getProperty(key);
             if (serverIdString != null) {
                 try {
                     return UUID.fromString(serverIdString);
@@ -62,7 +63,7 @@ public class ServerIdResolver {
         }
 
         UUID serverId = UUID.randomUUID();
-        properties.setProperty("server_id", serverId.toString());
+        properties.setProperty(key, serverId.toString());
 
         this.write(properties);
         return serverId;
