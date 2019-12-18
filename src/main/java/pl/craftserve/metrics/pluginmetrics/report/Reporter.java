@@ -40,12 +40,12 @@ public class Reporter {
     private Task task;
 
     public Reporter(Sampler sampler, Logger logger, List<Endpoint> endpoints, ExecutorService executorService) {
-        Preconditions.checkArgument(!endpoints.isEmpty(), "endpoints is empty!");
-
         this.sampler = Objects.requireNonNull(sampler, "sampler");
         this.logger = Objects.requireNonNull(logger, "logger");
         this.endpoints = ImmutableList.copyOf(Objects.requireNonNull(endpoints, "endpoints"));
         this.executorService = Objects.requireNonNull(executorService, "executorService");
+
+        Preconditions.checkArgument(!endpoints.isEmpty(), "endpoints is empty!");
     }
 
     public void shutdown() {

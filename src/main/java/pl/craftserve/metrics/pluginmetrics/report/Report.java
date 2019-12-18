@@ -32,10 +32,10 @@ public class Report {
     private final List<Sample> samples;
 
     public Report(UUID uniqueId, List<Sample> samples) {
-        Preconditions.checkArgument(!samples.isEmpty(), "samples is empty!");
-
         this.uniqueId = Objects.requireNonNull(uniqueId, "uniqueId");
         this.samples = ImmutableList.copyOf(Objects.requireNonNull(samples, "samples"));
+
+        Preconditions.checkArgument(!samples.isEmpty(), "samples is empty!");
     }
 
     @Override

@@ -54,14 +54,14 @@ public class Metrics {
     private Reporter reporter;
 
     protected Metrics(Plugin plugin, UUID serverId, EntityRegistry entityRegistry, Duration sampleInterval, Duration reportInterval, List<Endpoint> endpoints) {
-        Preconditions.checkArgument(!endpoints.isEmpty(), "endpoints is empty!");
-
         this.plugin = Objects.requireNonNull(plugin, "plugin");
         this.serverId = Objects.requireNonNull(serverId, "serverId");
         this.entityRegistry = Objects.requireNonNull(entityRegistry, "entityRegistry");
         this.sampleInterval = Objects.requireNonNull(sampleInterval, "sampleInterval");
         this.reportInterval = Objects.requireNonNull(reportInterval, "reportInterval");
         this.endpoints = ImmutableList.copyOf(Objects.requireNonNull(endpoints, "endpoints"));
+
+        Preconditions.checkArgument(!endpoints.isEmpty(), "endpoints is empty!");
     }
 
     public Plugin getPlugin() {
