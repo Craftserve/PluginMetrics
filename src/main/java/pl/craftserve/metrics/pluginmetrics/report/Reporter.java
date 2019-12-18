@@ -76,6 +76,7 @@ public class Reporter {
         report.serialize(json);
 
         return this.executorService.submit(() -> {
+            this.logger.fine("Submitting queued samples for plugin metrics.");
             for (Endpoint endpoint : this.endpoints) {
                 try {
                     // TODO we should clone this JsonObject for each consumer
