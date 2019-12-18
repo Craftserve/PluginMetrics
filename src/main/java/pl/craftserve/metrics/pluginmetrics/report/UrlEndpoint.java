@@ -21,17 +21,22 @@ import pl.craftserve.metrics.pluginmetrics.Metrics;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class UrlEndpoint implements Endpoint {
     public static final int PROTOCOL_REVISION = 0;
     public static final URL CRAFTSERVE_METRICS;
+
+    private static final Charset CHARSET = StandardCharsets.UTF_8;
 
     static {
         try {
@@ -60,10 +65,13 @@ public class UrlEndpoint implements Endpoint {
 
         HttpsURLConnection connection = (HttpsURLConnection) urlConnection;
         connection.setDoOutput(true);
-        connection.addRequestProperty("User-Agent", this.formatUserAgent());
         connection.setRequestMethod("POST");
+        connection.setRequestProperty("User-Agent", this.formatUserAgent());
+        connection.setRequestProperty("Content-Type", "application/json; charset=" + CHARSET.name());
 
-        // TODO submit JSON object
+        try (OutputStream outputStream = connection.getOutputStream()) {
+            outputStream.write(json.toString().getBytes(CHARSET));
+        }
 
         do {
             try {
@@ -75,8 +83,9 @@ public class UrlEndpoint implements Endpoint {
         } while (true);
 
         int responseCode = connection.getResponseCode();
-        if (responseCode != HttpURLConnection.HTTP_NO_CONTENT) {
-            throw new IOException("Request returned " + responseCode + ", " + HttpURLConnection.HTTP_NO_CONTENT + " was expected.");
+        if (responseCode != HttpURLConnection.HTTP_OK && responseCode != HttpURLConnection.HTTP_NO_CONTENT) {
+            throw new IOException("Request returned " + responseCode + ", " + HttpURLConnection.HTTP_OK +
+                    " or " + HttpsURLConnection.HTTP_NO_CONTENT + " was expected.");
         }
 
         connection.disconnect();
