@@ -179,7 +179,7 @@ public class EntityRegistry extends ForwardingMap<NamespacedKey, Entity> {
     }
 
     /**
-     * System-related entities, such as disk and memory usage and OS version.
+     * System-related entities, such as memory usage and OS version.
      */
     public interface System extends ConstantEntityList {
         Entity<String> OS_ARCH = new StringEntity(system("os_arch"),

@@ -18,7 +18,6 @@ package pl.craftserve.metrics.pluginmetrics.entity;
 
 import com.google.gson.JsonArray;
 import org.bukkit.NamespacedKey;
-import pl.craftserve.metrics.pluginmetrics.Metrics;
 import pl.craftserve.metrics.pluginmetrics.RecordFactory;
 
 public abstract class ArrayEntity<T> extends Entity<T> {
@@ -27,5 +26,5 @@ public abstract class ArrayEntity<T> extends Entity<T> {
     }
 
     @Override
-    public abstract JsonArray createSerializedRecord(Metrics metrics) throws Throwable;
+    protected abstract JsonArray serialize(T record);
 }
