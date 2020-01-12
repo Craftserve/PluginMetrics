@@ -39,7 +39,7 @@ public class UrlEndpoint {
 
     static {
         try {
-            CRAFTSERVE_METRICS = new URL("https://metrics.craftserve.pl");
+            CRAFTSERVE_METRICS = new URL("https://craftserve.pl/api/plugin_metrics");
         } catch (MalformedURLException e) {
             throw new Error(e); // should never happen
         }
